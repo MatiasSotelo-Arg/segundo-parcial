@@ -43,9 +43,35 @@ int main() {
 	inicializarGrafo(&grafo);
 	
 	agregarVertice(&grafo, 0);
+	agregarVertice(&grafo, 2);
 	agregarVertice(&grafo, 6);
-//	agregarArco();
-//	visualizarMatrizAdyacencia();
+	agregarVertice(&grafo, 3);
+	
+	arco.origen = 6;
+	arco.destino = 3;
+	
+	agregarArco(&grafo, arco);
+	
+	arco.origen = 3;
+	arco.destino = 6;
+	
+	agregarArco(&grafo, arco);
+	
+	arco.origen = 1;
+	arco.destino = 2;
+	
+	agregarArco(&grafo, arco);
+	
+	arco.origen = 1;
+	arco.destino = 6;
+	
+	agregarArco(&grafo, arco);
+	
+	
+	
+	
+	visualizarMatrizAdyacencia(grafo);
+	
 	return 0;
 }
 
@@ -64,10 +90,31 @@ void inicializarGrafo(tGrafoNoPonderado * pGrafo) {
 	
 } 
 
-
 void agregarVertice(tGrafoNoPonderado * pGrafo, tVertice pVertice) {
 	pGrafo->vertices[pVertice] = 1;
+	printf("Se creo el vertice %d\n",pVertice);
 }
-//void agregarArco();
-//void visualizarMatrizAdyacencia();
+void agregarArco(tGrafoNoPonderado * pGrafo, tArco pArco) {
+	pGrafo->arcos[pArco.origen][pArco.destino] = 1;
+	printf("Se creo arco %d -> %d \n",pArco.origen,pArco.destino);	
+}
+
+void visualizarMatrizAdyacencia(tGrafoNoPonderado  pGrafo) {
+	
+	int x, y; 
+	printf("\nMatriz de adyacencia\n");
+	printf("  1 2 3 4 5 6 7\n");
+	for(x=1; x<=N; x++) {
+		printf("%d ",x);
+		for(y = 1; y <=N; y++) {
+			if(pGrafo.arcos[x][y] == 1) {
+				printf("1 ");
+			} else {
+				printf("0 ");
+			}
+		}
+		printf("\n");
+		
+	}
+}
 
