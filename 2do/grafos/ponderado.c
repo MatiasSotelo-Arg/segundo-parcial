@@ -20,7 +20,7 @@ el siguiente ejemplo: (90.24 km, 35.25 ltrs) */
 #define N 7
 
 typedef int tVertice;
-	
+
 typedef struct {
 	float distanciaKm;
 	float cantPromCombustible;
@@ -38,18 +38,19 @@ typedef tPeso conjuntoArcos[N][N];
 typedef struct {
 	conjuntoVertices vertices;
 	conjuntoArcos arcos;
-}tGrafoPlayas;
+}tGrafoPlayas; 
 
-tArco arco;
+//globales
 tGrafoPlayas grafo;
+tArco arco;
 
-//prototipos 
+//implementacion 
 void inicializarMatriz(tGrafoPlayas *);
 void agregarVertice(tGrafoPlayas *, tVertice);
 void agregarArco(tGrafoPlayas *, tArco);
 void imprimirMatriz(tGrafoPlayas, char);
 
-//main
+//main 
 int main() {
 	inicializarMatriz(&grafo);
 	agregarVertice(&grafo, 0);
@@ -57,66 +58,73 @@ int main() {
 	
 	arco.origen = 0;
 	arco.destino = 1;
-	arco.peso.cantPromCombustible = 100.00;
-	arco.peso.distanciaKm = 2.00;
+	arco.peso.distanciaKm = 100.00;
+	arco.peso.cantPromCombustible = 2.00;
 	agregarArco(&grafo, arco);
-	
-	
+//	
+	fflush(stdin);
 	imprimirMatriz(grafo,'p'); // (a-adyacencia p-pesos)
 	return 0;
 }
 
-//implementacion
+//implementacion 
 void inicializarMatriz(tGrafoPlayas * pGrafo) {
-    int x, y;
-
-    for (x = 0; x < N; x++) {
-        pGrafo->vertices[x] = 0;
-        for (y = 0; y < N; y++) {
-            pGrafo->arcos[x][y].distanciaKm = 0.00;
-            pGrafo->arcos[x][y].cantPromCombustible = 0.00;
-        }
-    }
-    printf("Grafo inicializado!\n");
-}
-
+	int i, j;
+	
+	for(i=0;i<N;i++) {
+		pGrafo->vertices[i] = 0;
+		for(j=0;j<N;j++) {
+			pGrafo->arcos[i][j].distanciaKm = 00.00;
+			pGrafo->arcos[i][j].cantPromCombustible = 00.00; 
+		}
+	}
+	printf("matriz inicializada\n");
+} 
 
 void agregarVertice(tGrafoPlayas * pGrafo, tVertice pVertice) {
-	pGrafo->vertices[pVertice] = 1;
-	printf("Se agrego el vertice %d\n",pVertice);
+	if(pVertice <= N) {
+		pGrafo->vertices[pVertice] = 1;
+		printf("Se agrego el vertice %d\n",pVertice);
+	} else {
+		printf("el vertice no existe\n");
+	}
 }
 
 void agregarArco(tGrafoPlayas * pGrafo, tArco pArco) {
-	pGrafo->arcos[pArco.origen][pArco.destino] = pArco.peso;
-	printf("Se agrego el arco %d %d\n",pArco.origen, pArco.destino);
+	if(pGrafo->vertices[pArco.origen] == 1 && pGrafo->vertices[pArco.destino] == 1) {
+		pGrafo->arcos[pArco.origen][pArco.destino] = pArco.peso;
+		printf("Se agrego el arco %d %d\n",pArco.origen, pArco.destino);
+	}	
 }
 
-void imprimirMatriz(tGrafoPlayas pGrafo, char pTipo) {
-	
-	if(pTipo != 'a' && pTipo != 'p') {
-		printf("%c: no es opcion valida\n",pTipo);	
+void imprimirMatriz(tGrafoPlayas pGrafo, char pChar) {
+
+
+	if(pChar != 'a' && pChar != 'p') {
+		printf("No se peude\n");
 	} else {
-		
-		int x,y;
-		
-		for(x = 0; x < N; x++) {
-			for(y = 0; y < N; y++) {
-				if(pTipo == 'a') {
-					if(pGrafo.arcos[x][y].distanciaKm != 0 || pGrafo.arcos[x][y].cantPromCombustible != 0) {
+			
+		int i,j; 
+		for(i=0;i<N;i++) {
+			for(j=0;j<N;j++) {
+
+				if(pChar == 'a') {
+					
+					if(pGrafo.arcos[i][j].distanciaKm != 0 || pGrafo.arcos[i][j].cantPromCombustible != 0) {
 						printf("1 ");
 					} else {
 						printf("0 ");
-					}
-				} 
-				if(pTipo == 'p') {
-					printf("%-6.2f %-6.2f | ", pGrafo.arcos[x][y].distanciaKm, pGrafo.arcos[x][y].cantPromCombustible);
+					}	
+				}
+				if(pChar == 'p') {
+				
+					printf("%-6.2f %-6.2f |", pGrafo.arcos[i][j].distanciaKm, pGrafo.arcos[i][j].cantPromCombustible);
 				}
 			}
 			printf("\n");
 		}
-		
 	}
-	
 }
+
 
 

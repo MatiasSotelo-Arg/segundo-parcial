@@ -97,7 +97,9 @@ void finCorte() {
 	
 	totalAlumnos++; 
 	
-	printf("%d %.2f",registro.nroLibreta, promedio);
+	printf("%d %.2f\n",registro.nroLibreta, promedio);
+	
+	registroAnterior = registro;
 }
 
 void finalizacion() {

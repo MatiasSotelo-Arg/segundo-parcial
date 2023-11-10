@@ -93,6 +93,7 @@ void agregarVertice(tGrafoNoPonderado * pGrafo, tVertice pVertice) {
 }
 void agregarArco(tGrafoNoPonderado * pGrafo, tArco pArco) {
 	pGrafo->arcos[pArco.origen][pArco.destino] = 1;
+	pGrafo->arcos[pArco.origen][pArco.destino] = 1;
 	printf("Se creo arco %d -> %d \n",pArco.origen,pArco.destino);	
 }
 
