@@ -55,19 +55,21 @@ int totalNotas;
 
 int subTotalAlumnos, totalAlumnos;
 
-tRegistroALumno alumnoMayorPromedio;
+tRegistroAlumno ultimoRegistro,alumnoMayorPromedio;
 
 //prototipos 
-inicializacion();
-procesoCorte();
-finalizacion();
+void inicializacion();
+void procesoCorte();
+void finalizacion();
 
-principioCorte();
-unGrupo();
-finCorte();
+void principioCorte();
+void unGrupo();
+void finCorte();
 
 //main 
 int main() {
+	inicializacion();
+	finalizacion();
 	return 0;
 }
 
@@ -78,10 +80,37 @@ void inicializacion() {
 	if(archivoNotas != NULL) {
 		printf("archivo abierto\n");
 	} else {
-		printf("error\");
+		printf("error\n");
 		exit(EXIT_FAILURE);
 		printf("archivo cerrado\n");
 	}
+	
+	fread(&registro, sizeof(tRegistroAlumno),1,archivoNotas);
+	
+	acumuladorNotas = 0;
+	promedio = 0;
+	totalNotas = 0;
+
+	subTotalAlumnos = 0;
+	totalAlumnos = 0;
+
+	ultimoRegistro = registro;
+	
+	alumnoMayorPromedio = ultimoRegistro;
+	
+	printf("*** Listado de promedios ***\n");
+	printf("Nro de Libreta | Nota promedio\n");
+}
+
+void procesoCorte() {
+	while(!feof(archivoNotas)) {
+		principioCorte();
+	}	
+}
+
+void finalizacion(){
+	fclose(archivoNotas);
+	printf("archivo cerrado\n");
 }
 
 

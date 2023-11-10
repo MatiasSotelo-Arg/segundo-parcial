@@ -67,9 +67,6 @@ int main() {
 	
 	agregarArco(&grafo, arco);
 	
-	
-	
-	
 	visualizarMatrizAdyacencia(grafo);
 	
 	return 0;

@@ -10,6 +10,7 @@ Se solicita:
 a) Listar el detalle de movimientos por cuenta.
 b) Informar cantidad de movimientos y totales de importes de depósitos y extracción, por cuenta.
 El formato de salida requerido es:
+
 *** Detalle de Movimientos por cuenta ***
 Nro.Cuenta Depósito Extracción
 111  	   xxxxx,xx 0
@@ -17,8 +18,7 @@ Nro.Cuenta Depósito Extracción
 111 	   xxxxx,xx 0
 111		   0 		xxxxx,xx
 
-Total Cta 111
-Cantidad de mov. Cta 111  2 2
+Total Cta 111 Cantidad de mov. Cta 111 2 2
 
 */
 
@@ -43,7 +43,7 @@ FILE * archivoMovBanco;
 int totalDepositos, totalExtraccion;
 
 //prototipo
-void inicializacion();
+void inicializacion(); 
 void procesoCorte();
 void finalizacion();
 
@@ -61,6 +61,7 @@ int main() {
 
 //implementacion
 void inicializacion() {
+	//abrir archivo
 	archivoMovBanco = fopen("movimientosClientes.dat","rb");
 	
 	if(archivoMovBanco == NULL) {
@@ -68,9 +69,11 @@ void inicializacion() {
 		exit(EXIT_FAILURE);
 	} else {
 		printf("archivo abierto\n");
+		//primer lectura
 		fread(&cliente, sizeof(tRegistro),1,archivoMovBanco);
 	} 
 	
+	//inicializa variables
 	registroAnterior = cliente;
 	totalDepositos = 0;
 	totalExtraccion = 0;
@@ -81,7 +84,8 @@ void inicializacion() {
 }
 
 void procesoCorte() {
-	while(!feof(archivoMovBanco)) {
+
+	while(!feof(archivoMovBanco)) { 
 		principioCorte();
 		while(!feof(archivoMovBanco) && cliente.nroCuenta == registroAnterior.nroCuenta) {
 			unGrupo();
@@ -91,17 +95,17 @@ void procesoCorte() {
 	}		
 }
 
-
-
 void principioCorte() {
 	totalDepositos = 0;
 	totalExtraccion = 0;
 }
-void unGrupo() {
 
+void unGrupo() {
+	
 	printf("|%-11s|%-9.2f|%-10.2f|\n", cliente.nombreCliente, cliente.codOperacion == 1 ? cliente.importe : 0, cliente.codOperacion == 2 ? cliente.importe : 0);
 
 	cliente.codOperacion == 1 ? totalDepositos++ : totalExtraccion++;
+	
 }
 void finCorte() {
 	printf("\nCantidad de mov. Cta %-s %d %d\n\n",cliente.nombreCliente, totalDepositos, totalExtraccion);
